@@ -1,6 +1,9 @@
 package day2
 
-import "testing"
+import (
+	"github.com/Umqra/aoc2022/internal"
+	"testing"
+)
 
 func TestScore_Update(t *testing.T) {
 	score := Score(0)
@@ -38,9 +41,9 @@ func TestScore_UpdateByOutcome(t *testing.T) {
 }
 
 func TestSolve1(t *testing.T) {
-	t.Logf("result: %v", Solve1("day2.a.in"))
+	t.Logf("result: %v", internal.Eval("day2.a.in", Solve1))
 }
 
 func TestSolve2(t *testing.T) {
-	t.Logf("result: %v", Solve2("day2.a.in"))
+	t.Logf("result: %v", internal.Eval("day2.a.in", Solve2))
 }

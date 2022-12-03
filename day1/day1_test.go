@@ -1,11 +1,14 @@
 package day1
 
-import "testing"
+import (
+	"github.com/Umqra/aoc2022/internal"
+	"testing"
+)
 
 func TestSolve1(t *testing.T) {
-	t.Logf("result: %v", Solve1("day1.a.in"))
+	t.Logf("result: %v", internal.Eval("day1.a.in", Solve1))
 }
 
 func TestSolve2(t *testing.T) {
-	t.Logf("result: %v", Solve2("day1.a.in"))
+	t.Logf("result: %v", internal.Eval("day1.a.in", Solve2))
 }

@@ -2,8 +2,8 @@ package day2
 
 import (
 	"fmt"
+	"github.com/Umqra/aoc2022/internal"
 	"os"
-	"strings"
 )
 
 type Element int
@@ -45,7 +45,7 @@ func (a Element) ElementForResult(outcome Outcome) Element {
 	}
 }
 
-func ParseElement(s string) (element Element, err error) {
+func MustParseElement(s string) (element Element) {
 	switch s {
 	case "A", "X":
 		element = Rock
@@ -54,12 +54,12 @@ func ParseElement(s string) (element Element, err error) {
 	case "C", "Z":
 		element = Scissors
 	default:
-		err = fmt.Errorf("unable to parse element string: %v", s)
+		panic(fmt.Errorf("unable to parse element string: %v", s))
 	}
 	return
 }
 
-func ParseOutcome(s string) (outcome Outcome, err error) {
+func MustParseOutcome(s string) (outcome Outcome) {
 	switch s {
 	case "X":
 		outcome = Lose
@@ -68,7 +68,7 @@ func ParseOutcome(s string) (outcome Outcome, err error) {
 	case "Z":
 		outcome = Win
 	default:
-		err = fmt.Errorf("unable to parse outcome string: %v", s)
+		panic(fmt.Errorf("unable to parse outcome string: %v", s))
 	}
 	return
 }
@@ -83,58 +83,26 @@ func (score *Score) UpdateByOutcome(opponent Element, outcome Outcome) {
 	*score = Score(int(*score) + opponent.ElementForResult(outcome).Cost() + int(outcome))
 }
 
-func Solve1(input string) int {
-	bytes, err := os.ReadFile(input)
-	if err != nil {
-		panic(fmt.Errorf("unable to read input: %w", err))
-	}
-	lines := strings.Split(string(bytes), "\n")
+func Solve1(f *os.File) int {
 	score := Score(0)
-	for _, line := range lines {
-		if line == "" {
-			continue
-		}
-		tokens := strings.Split(line, " ")
-		if len(tokens) != 2 {
-			panic(fmt.Errorf("each line must have exactly 2 tokens"))
-		}
-		opponent, err := ParseElement(tokens[0])
-		if err != nil {
-			panic(fmt.Errorf("invalid opponent token: %w", err))
-		}
-		player, err := ParseElement(tokens[1])
-		if err != nil {
-			panic(fmt.Errorf("invalid player token: %w", err))
-		}
+	reader := internal.NewFileReader(f)
+	for reader.Scan() {
+		line := internal.NewStringReader(reader.ParseString()).SetDelimiter(" ")
+		opponent := MustParseElement(line.ScanToken("A|B|C"))
+		player := MustParseElement(line.ScanToken("X|Y|Z"))
 		score.Update(opponent, player)
 	}
 	return int(score)
 }
 
-func Solve2(input string) int {
-	bytes, err := os.ReadFile(input)
-	if err != nil {
-		panic(fmt.Errorf("unable to read input: %w", err))
-	}
-	lines := strings.Split(string(bytes), "\n")
+func Solve2(f *os.File) int {
 	score := Score(0)
-	for _, line := range lines {
-		if line == "" {
-			continue
-		}
-		tokens := strings.Split(line, " ")
-		if len(tokens) != 2 {
-			panic(fmt.Errorf("each line must have exactly 2 tokens"))
-		}
-		opponent, err := ParseElement(tokens[0])
-		if err != nil {
-			panic(fmt.Errorf("invalid opponent token: %w", err))
-		}
-		outcome, err := ParseOutcome(tokens[1])
-		if err != nil {
-			panic(fmt.Errorf("invalid outcome token: %w", err))
-		}
-		score.UpdateByOutcome(opponent, outcome)
+	reader := internal.NewFileReader(f)
+	for reader.Scan() {
+		line := internal.NewStringReader(reader.ParseString()).SetDelimiter(" ")
+		opponent := MustParseElement(line.ScanToken("A|B|C"))
+		player := MustParseOutcome(line.ScanToken("X|Y|Z"))
+		score.UpdateByOutcome(opponent, player)
 	}
 	return int(score)
 }

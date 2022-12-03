@@ -1,32 +1,19 @@
 package day1
 
 import (
-	"fmt"
+	"github.com/Umqra/aoc2022/internal"
 	"os"
 	"sort"
-	"strconv"
-	"strings"
 )
 
-func sortGroups(input string) []int {
-	bytes, err := os.ReadFile(input)
-	if err != nil {
-		panic(fmt.Errorf("unable to read input: %w", err))
-	}
-	lines := strings.Split(string(bytes), "\n\n")
-	groups := make([]int, len(lines))
-	for _, line := range lines {
+func sortGroups(f *os.File) []int {
+	inputReader := internal.NewFileReader(f).SetDelimiter("\n\n")
+	groups := make([]int, 0)
+	for inputReader.Scan() {
+		groupReader := internal.NewStringReader(inputReader.ParseString())
 		total := 0
-		group := strings.Split(line, "\n")
-		for _, item := range group {
-			if item == "" {
-				continue
-			}
-			current, err := strconv.Atoi(item)
-			if err != nil {
-				panic(fmt.Errorf("unexpected line format: %w", err))
-			}
-			total += current
+		for groupReader.Scan() {
+			total += groupReader.ParseInt()
 		}
 		groups = append(groups, total)
 	}
@@ -34,12 +21,12 @@ func sortGroups(input string) []int {
 	return groups
 }
 
-func Solve1(input string) int {
-	groups := sortGroups(input)
+func Solve1(f *os.File) int {
+	groups := sortGroups(f)
 	return groups[0]
 }
 
-func Solve2(input string) int {
-	groups := sortGroups(input)
+func Solve2(f *os.File) int {
+	groups := sortGroups(f)
 	return groups[0] + groups[1] + groups[2]
 }
