@@ -83,7 +83,7 @@ func (score *Score) UpdateByOutcome(opponent Element, outcome Outcome) {
 	*score = Score(int(*score) + opponent.ElementForResult(outcome).Cost() + int(outcome))
 }
 
-func Solve1(f *os.File) int {
+func Solve1(f *os.File) interface{} {
 	score := Score(0)
 	reader := internal.NewFileReader(f)
 	for reader.Scan() {
@@ -95,7 +95,7 @@ func Solve1(f *os.File) int {
 	return int(score)
 }
 
-func Solve2(f *os.File) int {
+func Solve2(f *os.File) interface{} {
 	score := Score(0)
 	reader := internal.NewFileReader(f)
 	for reader.Scan() {

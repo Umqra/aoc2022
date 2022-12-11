@@ -6,9 +6,9 @@ import (
 )
 
 func TestSolve1(t *testing.T) {
-	t.Logf("result: %v", internal.Eval("day1.a.in", Solve1))
+	t.Logf("result: %v\n", internal.Eval("day1.a.in", Solve1))
 }
 
 func TestSolve2(t *testing.T) {
-	t.Logf("result: %v", internal.Eval("day1.a.in", Solve2))
+	t.Logf("result: %v\n", internal.Eval("day1.a.in", Solve2))
 }

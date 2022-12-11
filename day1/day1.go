@@ -21,12 +21,12 @@ func sortGroups(f *os.File) []int {
 	return groups
 }
 
-func Solve1(f *os.File) int {
+func Solve1(f *os.File) interface{} {
 	groups := sortGroups(f)
 	return groups[0]
 }
 
-func Solve2(f *os.File) int {
+func Solve2(f *os.File) interface{} {
 	groups := sortGroups(f)
 	return groups[0] + groups[1] + groups[2]
 }

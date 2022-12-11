@@ -52,7 +52,7 @@ func parseRanges(s string) []Range {
 	return result
 }
 
-func Solve1(f *os.File) int {
+func Solve1(f *os.File) interface{} {
 	reader := internal.NewFileReader(f)
 	count := 0
 	for reader.Scan() {
@@ -65,7 +65,7 @@ func Solve1(f *os.File) int {
 	return count
 }
 
-func Solve2(f *os.File) int {
+func Solve2(f *os.File) interface{} {
 	reader := internal.NewFileReader(f)
 	count := 0
 	for reader.Scan() {

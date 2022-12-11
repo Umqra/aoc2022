@@ -64,7 +64,7 @@ func (e Element) Cost() int {
 	panic(fmt.Errorf("unexpected element: %v", e))
 }
 
-func Solve1(f *os.File) int {
+func Solve1(f *os.File) interface{} {
 	reader := internal.NewFileReader(f)
 	total := 0
 	for reader.Scan() {
@@ -77,7 +77,7 @@ func Solve1(f *os.File) int {
 	return total
 }
 
-func Solve2(f *os.File) int {
+func Solve2(f *os.File) interface{} {
 	reader := internal.NewFileReader(f)
 	total := 0
 	for reader.Scan() {
